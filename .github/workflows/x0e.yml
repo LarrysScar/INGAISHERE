@@ -83,9 +83,10 @@ jobs:
               run: |
                   python -c "
                   import sys, json; sys.path.insert(0, '.')
+                  from pathlib import Path
                   from host.log_io import read_jsonl
-                  actual = read_jsonl('/tmp/x0e_container_a_logs/state_hashes.jsonl')
-                  expected = read_jsonl('tests/fixtures/x0e_end_to_end_vector/expected_state_hashes.jsonl')
+                  actual = read_jsonl(Path('/tmp/x0e_container_a_logs/state_hashes.jsonl'))
+                  expected = read_jsonl(Path('tests/fixtures/x0e_end_to_end_vector/expected_state_hashes.jsonl'))
                   assert len(actual) == len(expected), f'Cycle count mismatch: {len(actual)} vs {len(expected)}'
                   for a, e in zip(actual, expected):
                       assert a['state_hash'] == e['state_hash'], f'Hash mismatch at cycle {a[\"cycle_id\"]}'
